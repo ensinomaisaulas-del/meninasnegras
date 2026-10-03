@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meninas Negras — Vista sua história</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Arial;background:#fff7e8;color:#263238}
+header{background:#087f78;color:white;text-align:center;padding:18px}
+h1{margin:0;font-size:clamp(1.35rem,4vw,2rem)}
+header p{margin:5px 0 0}
+main{max-width:980px;margin:auto;padding:16px}
+.panel{background:white;border:2px solid #d8e8df;border-radius:18px;padding:14px;margin-bottom:14px;box-shadow:0 3px 12px #153b2b12}
+h2{font-size:1.1rem;margin:0 0 10px}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:2px solid #d6e4df;border-radius:12px;background:#f7fbf8;padding:10px 13px;font-weight:650;cursor:pointer}
+.btn[aria-pressed=true],.btn:focus{background:#087f78;color:white;border-color:#087f78}
+.layout{display:grid;grid-template-columns:minmax(230px,1fr) minmax(250px,1.2fr);gap:14px}
+.stage{min-height:360px;background:linear-gradient(#e7f8f4,#fff1d7);border-radius:16px;display:grid;place-items:center;position:relative;overflow:hidden}
+.stage svg{height:340px;max-width:100%}
+.stage:after{content:"";position:absolute;bottom:18px;width:170px;height:13px;border-radius:50%;background:#8d9b8b33;z-index:0}
+svg{position:relative;z-index:1}
+.controls{display:grid;gap:12px;align-content:start}
+.note{font-size:.9rem;color:#52645d}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{width:42px;height:42px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 1px #aaa;cursor:pointer}
+.swatch[aria-pressed=true]{box-shadow:0 0 0 3px #087f78}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions button{flex:1}
+.small{font-size:.82rem;color:#5a6962;text-align:center;margin-top:12px}
+.hair-info{margin-top:12px;padding:12px;background:#f2faf6;border-radius:12px;border:1px solid #d8e8df}
+.hair-info p{margin:5px 0;font-size:.9rem}
+@media(max-width:650px){
+.layout{grid-template-columns:1fr}
+.stage{min-height:320px}
+.stage svg{height:300px}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Meninas Negras — Vista sua história</h1>
+<p>Crie combinações, explore cores e celebre a diversidade!</p>
+</header>
+
+<main>
+<section class="panel">
+<h2>1. Escolha uma personagem</h2>
+<div class="choices" id="people">
+<button class="btn" data-person="0" aria-pressed="true">Mariana</button>
+<button class="btn" data-person="1" aria-pressed="false">Dandara</button>
+<button class="btn" data-person="2" aria-pressed="false">Luanda</button>
+</div>
+</section>
+
+<div class="layout">
+<section class="panel">
+<h2>Prévia do visual</h2>
+<div class="stage">
+<svg id="doll" viewBox="0 0 240 370" role="img" aria-label="Personagem ilustrada com roupa selecionada">
+<!-- Cabelo atrás -->
+<g id="hair"></g>
+
+<!-- Pernas -->
+<path id="legLeft" d="M99 235 L97 315 Q96 330 108 330 L116 245Z" fill="#995d40"/>
+<path id="legRight" d="M126 244 L132 315 Q132 330 144 329 L139 235Z" fill="#995d40"/>
+
+<!-- Sapatos -->
+<path d="M96 321q-16 5-15 13h32v-7l-5-6zM132 321q-2 10 3 13h30q-1-9-19-13z" fill="#69432e"/>
+
+<!-- Braços -->
+<path id="armLeft" d="M91 133 Q75 160 79 204 L90 210 103 164Z" fill="#995d40"/>
+<path id="armRight" d="M149 133 Q165 160 161 204 L150 210 137 164Z" fill="#995d40"/>
+
+<!-- Pescoço e cabeça -->
+<rect id="neck" x="108" y="105" width="24" height="32" rx="10" fill="#995d40"/>
+<ellipse id="face" cx="120" cy="78" rx="35" ry="42" fill="#995d40"/>
+
+<!-- Orelhas -->
+<circle id="earLeft" cx="84" cy="82" r="7" fill="#995d40"/>
+<circle id="earRight" cx="156" cy="82" r="7" fill="#995d40"/>
+
+<!-- Rosto -->
+<path d="M103 78q7-5 13 0M125 78q7-5 13 0" stroke="#281b17" stroke-width="3" fill="none" stroke-linecap="round"/>
+<ellipse cx="110" cy="84" rx="2.7" ry="3.5" fill="#201714"/>
+<ellipse cx="132" cy="84" rx="2.7" ry="3.5" fill="#201714"/>
+<path d="M114 101q6 5 13 0" stroke="#642c2b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+<!-- Roupa -->
+<g id="outfit">
+<path id="top" d="M99 132 Q120 143 141 132 L151 184 89 184Z" fill="#f2b52d" stroke="#6d4b27" stroke-width="1.5"/>
+<path id="bottom" d="M91 179 L149 179 158 245 82 245Z" fill="#247b79" stroke="#24534e" stroke-width="1.5"/>
+</g>
+
+<!-- Cabelo frontal -->
+<g id="hairfront"></g>
+
+<!-- Acessórios -->
+<g id="accessory"></g>
+</svg>
+</div>
+
+<p class="small" id="caption">Mariana • visual casual</p>
+
+<div class="hair-info">
+<h2>Referência do cabelo</h2>
+<p id="hairDescription">Mariana: cabelo crespo volumoso com dois coques laterais.</p>
+</div>
+</section>
+
+<section class="panel controls">
+<div>
+<h2>2. Escolha uma peça</h2>
+<div class="choices" id="categories">
+<button class="btn" data-cat="everyday" aria-pressed="true">Casual</button>
+<button class="btn" data-cat="afro" aria-pressed="false">Estampas culturais</button>
+<button class="btn" data-cat="dress" aria-pressed="false">Vestidos</button>
+</div>
+</div>
+
+<div>
+<h2>3. Cores e estampas</h2>
+<div class="swatches" id="swatches"></div>
+</div>
+
+<div>
+<h2>4. Acessórios</h2>
+<div class="choices" id="accessories">
+<button class="btn" data-acc="none" aria-pressed="true">Sem acessório</button>
+<button class="btn" data-acc="head" aria-pressed="false">Faixa colorida</button>
+<button class="btn" data-acc="ear" aria-pressed="false">Brincos</button>
+</div>
+</div>
+
+<div class="actions">
+<button class="btn" id="random">🎲 Surpreenda-me</button>
+<button class="btn" id="reset">↺ Recomeçar</button>
+</div>
+
+<p class="note">
+As opções são combinações criativas inspiradas em cores, tecidos e referências culturais — não representam um traje único de todo um continente.
+</p>
+</section>
+</div>
+</main>
+
+<script>
+const people=[
+ {name:"Mariana",skin:"#995d40",hair:"#302018",
+  description:"Cabelo crespo volumoso, com dois coques arredondados nas laterais."},
+ {name:"Dandara",skin:"#75452f",hair:"#211713",
+  description:"Cabelo afro curto, arredondado e com bastante volume."},
+ {name:"Luanda",skin:"#ad6d4b",hair:"#3a2118",
+  description:"Tranças longas, com a parte superior do cabelo presa para trás."}
+];
+
+const looks={
+ everyday:[
+  ["#f2b52d","#247b79"],
+  ["#e88b9b","#3f83b7"],
+  ["#f4eee0","#5b8b58"],
+  ["#8d69b5","#e1a33b"]
+ ],
+ afro:[
+  ["#f0a52c","#176e63"],
+  ["#e45b45","#263b77"],
+  ["#f2d16b","#a13c53"],
+  ["#218b70","#df762f"]
+ ],
+ dress:[
+  ["#e36d65","#e36d65"],
+  ["#397eaa","#397eaa"],
+  ["#e5b83c","#e5b83c"],
+  ["#986bb0","#986bb0"]
+ ]
+};
+
+let person=0;
+let cat="everyday";
+let colorIndex=0;
+let acc="none";
+
+const $=id=>document.getElementById(id);
+
+function drawHair(personIndex){
+ const back=$("hair");
+ const front=$("hairfront");
+ const color=people[personIndex].hair;
+
+ back.innerHTML="";
+ front.innerHTML="";
+
+ if(personIndex===0){
+  // Mariana: cabelo crespo com dois coques
+  back.innerHTML=`
+   <ellipse cx="120" cy="69" rx="48" ry="48" fill="${color}"/>
+   <circle cx="83" cy="56" r="23" fill="${color}"/>
+   <circle cx="157" cy="56" r="23" fill="${color}"/>
+   <circle cx="88" cy="39" r="17" fill="${color}"/>
+   <circle cx="151" cy="38" r="18" fill="${color}"/>
+  `;
+  front.innerHTML=`
+   <path d="M84 78 Q72 26 111 24 Q145 17 156 53
+   Q162 68 155 83 Q144 60 128 57 Q107 58 84 78Z"
+   fill="${color}"/>
+   <circle cx="91" cy="44" r="12" fill="${color}"/>
+   <circle cx="145" cy="40" r="13" fill="${color}"/>
+  `;
+ }
+ else if(personIndex===1){
+  // Dandara: afro curto e arredondado
+  back.innerHTML=`
+   <ellipse cx="120" cy="66" rx="51" ry="48" fill="${color}"/>
+   <circle cx="84" cy="67" r="22" fill="${color}"/>
+   <circle cx="156" cy="67" r="22" fill="${color}"/>
+   <circle cx="99" cy="34" r="19" fill="${color}"/>
+   <circle cx="120" cy="27" r="21" fill="${color}"/>
+   <circle cx="141" cy="35" r="20" fill="${color}"/>
+  `;
+  front.innerHTML=`
+   <path d="M85 78 Q77 34 106 30 Q119 20 133 29
+   Q161 32 155 78 Q143 58 128 56 Q106 56 85 78Z"
+   fill="${color}"/>
+   <circle cx="96" cy="45" r="13" fill="${color}"/>
+   <circle cx="115" cy="35" r="13" fill="${color}"/>
+   <circle cx="137" cy="42" r="14" fill="${color}"/>
+  `;
+ }
+ else{
+  // Luanda: tranças compridas
+  back.innerHTML=`
+   <ellipse cx="120" cy="62" rx="42" ry="39" fill="${color}"/>
+   <path d="M88 63 Q78 95 82 160
+   M101 69 Q94 110 97 167
+   M139 69 Q146 110 143 167
+   M152 63 Q163 95 158 160"
+   fill="none" stroke="${color}" stroke-width="10"
+   stroke-linecap="round"/>
+   <path d="M88 90 L82 160 M101 94 L97 167
+   M139 94 L143 167 M152 90 L158 160"
+   fill="none" stroke="#a66b45" stroke-width="2"
+   stroke-linecap="round"/>
+  `;
+  front.innerHTML=`
+   <path d="M84 74 Q78 30 120 27 Q162 30 156 74
+   Q139 56 120 57 Q101 56 84 74Z"
+   fill="${color}"/>
+   <path d="M91 55 Q110 39 120 55 Q132 38 149 55"
+   fill="none" stroke="${color}" stroke-width="8"
+   stroke-linecap="round"/>
+  `;
+ }
+}
+
+function render(){
+ const p=people[person];
+ const colors=looks[cat][colorIndex%looks[cat].length];
+
+ document.querySelectorAll("#people button").forEach(b=>
+  b.setAttribute("aria-pressed",String(+b.dataset.person===person))
+ );
+ document.querySelectorAll("#categories button").forEach(b=>
+  b.setAttribute("aria-pressed",String(b.dataset.cat===cat))
+ );
+ document.querySelectorAll("#accessories button").forEach(b=>
+  b.setAttribute("aria-pressed",String(b.dataset.acc===acc))
+ );
+
+ // Atualizar pele
+ ["face","neck","earLeft","earRight","armLeft","armRight","legLeft","legRight"]
+ .forEach(id=>$(id).setAttribute("fill",p.skin));
+
+ // Atualizar penteado
+ drawHair(person);
+
+ // Atualizar roupas
+ $("top").setAttribute("fill",colors[0]);
+ $("bottom").setAttribute("fill",colors[1]);
+
+ if(cat==="afro"){
+  $("bottom").setAttribute("d",
+   "M91 179 L149 179 169 245 Q120 260 71 245Z");
+ }else if(cat==="dress"){
+  $("top").setAttribute("d",
+   "M99 132 Q120 143 141 132 L151 184 89 184Z");
+  $("bottom").setAttribute("d",
+   "M91 177 L149 177 169 245 Q120 260 71 245Z");
+ }else{
+  $("bottom").setAttribute("d",
+   "M91 179 L149 179 158 245 82 245Z");
+ }
+
+ // Acessórios
+ $("accessory").innerHTML=
+  acc==="head"
+   ? `<path d="M88 61Q120 35 152 61L148 69
+       Q120 48 92 69Z" fill="#f0b52f"
+       stroke="#a64c39" stroke-width="3"/>`
+   : acc==="ear"
+   ? `<g fill="#f4c542" stroke="#a66b19" stroke-width="2">
+       <circle cx="83" cy="94" r="5"/>
+       <circle cx="157" cy="94" r="5"/>
+      </g>`
+   : "";
+
+ $("caption").textContent=p.name+" • "+
+  ({everyday:"visual casual",afro:"estampa cultural",dress:"vestido"}[cat]);
+
+ $("hairDescription").textContent=p.name+": "+p.description;
+}
+
+function makeSwatches(){
+ const el=$("swatches");
+ el.innerHTML="";
+ looks[cat].forEach((pair,i)=>{
+  const b=document.createElement("button");
+  b.className="swatch";
+  b.style.background=
+   `linear-gradient(135deg,${pair[0]} 0 50%,${pair[1]} 50%)`;
+  b.setAttribute("aria-label","Combinação "+(i+1));
+  b.setAttribute("aria-pressed",String(i===colorIndex));
+  b.onclick=()=>{
+   colorIndex=i;
+   makeSwatches();
+   render();
+  };
+  el.appendChild(b);
+ });
+}
+
+$("people").onclick=e=>{
+ const b=e.target.closest("button");
+ if(b){
+  person=+b.dataset.person;
+  render();
+ }
+};
+
+$("categories").onclick=e=>{
+ const b=e.target.closest("button");
+ if(b){
+  cat=b.dataset.cat;
+  colorIndex=0;
+  makeSwatches();
+  render();
+ }
+};
+
+$("accessories").onclick=e=>{
+ const b=e.target.closest("button");
+ if(b){
+  acc=b.dataset.acc;
+  render();
+ }
+};
+
+$("random").onclick=()=>{
+ person=Math.floor(Math.random()*3);
+ cat=["everyday","afro","dress"][Math.floor(Math.random()*3)];
+ colorIndex=Math.floor(Math.random()*4);
+ acc=["none","head","ear"][Math.floor(Math.random()*3)];
+ makeSwatches();
+ render();
+};
+
+$("reset").onclick=()=>{
+ person=0;
+ cat="everyday";
+ colorIndex=0;
+ acc="none";
+ makeSwatches();
+ render();
+};
+
+makeSwatches();
+render();
+</script>
+</body>
+</html>
